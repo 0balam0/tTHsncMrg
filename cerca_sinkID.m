@@ -1,5 +1,9 @@
-function idMin = cerca_sinkID(signalL, signalS)
-% cerca id su signalL in cui dovrebbe partire signalS
+function [idMin, error] = cerca_sinkID(signalL, signalS)
+% idMin = cerca_sinkID(signalL, signalS)
+% signalL: segnale che contiene signalS
+% signalS: segnale contenuto in signalL
+% idMin: id di signalL in cui dovrebbe cominciale signalS
+% errore: valori della funzione d'errore per ogni id di signalL
 
 % traspone signalS se non è coerente con signalL (2 vettori riga/ 3 vettori
 % colonna)
