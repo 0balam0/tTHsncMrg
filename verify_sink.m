@@ -1,4 +1,10 @@
 function idMin = verify_sink(idMin, signalL, signalS)
+% idMin = verify_sink(idMin, signalL, signalS)
+% idMin: id trovato do da cerca_sinkID o cerca_sink1_3
+% idMin = cerca_sinkID(signalL, signalS)
+% signalL: segnale che contiene signalS
+% signalS: segnale contenuto in signalL
+% verifica che il segnale corto sia incluso nel segnale lungo
     lenL = length(signalL);
     lenS = length(signalS);
     fprintf('id min trovato da un verify: %d\n', idMin);
@@ -9,15 +15,10 @@ function idMin = verify_sink(idMin, signalL, signalS)
         switch answer
             case 'Yes'
                 idMin = cerca_sink1_3(signalL, signalS);
-%                 lenS_red = ceil(lenS/3);
-%                 signalS_red = signalS(lenS_red:lenS_red*2);
-%                 idMin = cerca_sinkID(signalL, signalS_red);
-%                 idMin = idMin - lenS_red+1;
-%                 fprintf('id min trovato con 1/3 della acq s: %d\n', idMin);
             case 'No'
-                fprintf('la a');
+                return;
             case 'Cancel'
-                fprintf('la a');
+                return;
         end 
     end
 end
