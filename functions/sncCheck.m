@@ -7,7 +7,7 @@ function [timeSnc, error] = sncCheck(error, timeSnc, signalL, signalS, timeL, ti
 % verifica che il segnale corto sia incluso nel segnale lungo
 %     lenL = length(timeL);
 %     lenS = length(timeS);
-    if timeSnc==timeL(1) || timeSnc == timeL-timeS % utilizzo una parte del segnale per calcolare il sincronismo
+    if timeSnc==timeL(1) || timeSnc == timeL(end)-timeS(end) % utilizzo una parte del segnale per calcolare il sincronismo
         quest = 'short signal not included in the long one. Do you want to synchronize signals using a part of the short signal?';
         answer = questdlg(quest,...
                           'Yes','No');
