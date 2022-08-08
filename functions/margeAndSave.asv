@@ -1,5 +1,7 @@
 function tTH1 = margeAndSave(risp, timeSnc, prefix2, tTH1, tTH2)
-% controllo la base tempi di tTH1 che contenga tutto tTH2
+    % controllo la base tempi di tTH1 che contenga tutto tTH2
+%     figure()
+%     plot(tTH2.time.v, tTH2.Vel_C.v)
     [tTH1, timeSnc] = evalNewTimeSpace_tTH1(timeSnc, tTH1, tTH2);
     [~, idMin] = min(abs(tTH1.time.v - timeSnc));
             switch risp
@@ -42,4 +44,5 @@ function tTH1 = margeAndSave(risp, timeSnc, prefix2, tTH1, tTH2)
                         end
                     end
             end
+% tTH = 3;
 end
