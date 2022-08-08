@@ -4,7 +4,6 @@ function tTH1 = margeAndSave(risp, timeSnc, prefix2, tTH1, tTH2)
     [~, idMin] = min(abs(tTH1.time.v - timeSnc));
             switch risp
                 case 1 % Save duplicates with prefix se esistono duplicati con prefisso allora li unisce
-                    
                     names1 = fieldnames(tTH1);
                     names2 = fieldnames(tTH2);
                     for i =1:length(names2)
