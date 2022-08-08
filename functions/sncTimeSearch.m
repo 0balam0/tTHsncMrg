@@ -1,4 +1,4 @@
-function [idMin, error] = sncTimeSearch(signalL, signalS, timetTH1)
+function [timeSnc, error] = sncTimeSearch(signalL, signalS, timeL)
 % idMin = cerca_sinkID(signalL, signalS)
 % signalL: segnale che contiene signalS
 % signalS: segnale contenuto in signalL
@@ -22,7 +22,7 @@ function [idMin, error] = sncTimeSearch(signalL, signalS, timetTH1)
         error(idStart) = sum(abs(signalL(idStart:lenS+idStart-1) - signalS));
     end
     [~, idMin] = min(error);    
-    timeSnc = time(timetTH1);
+    timeSnc = timeL(idMin);
 % plot dell'errore 
 %     fprintf('id min trovato da funzione completa: %d con errore %.2f', idMin, error(idMin));
 %     figure();

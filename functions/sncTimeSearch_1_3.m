@@ -1,4 +1,4 @@
-function [timeSnc, errore] = cerca_sink1_3(signalL, signalS, timeL, timeS)
+function [timeSnc, errore] = sncTimeSearch_1_3(signalL, signalS, timeL, timeS)
 % idMin = cerca_sink1_3(signalL, signalS)
 % richiama la funzione cerca_sinkID, utilizzando come valori si signalS il
 % terzo centrale del segnale di partenza. Da utilizzare nel caso in cui

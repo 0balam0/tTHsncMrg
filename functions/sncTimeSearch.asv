@@ -1,4 +1,4 @@
-function [idMin, error] = sncTimeSearch(signalL, signalS, timetTH1)
+function [timeSnc, error] = sncTimeSearch(signalL, signalS, timeL, timeS, mode)
 % idMin = cerca_sinkID(signalL, signalS)
 % signalL: segnale che contiene signalS
 % signalS: segnale contenuto in signalL
@@ -7,22 +7,36 @@ function [idMin, error] = sncTimeSearch(signalL, signalS, timetTH1)
 
 % traspone signalS se non è coerente con signalL (2 vettori riga/ 3 vettori
 % colonna)
-    trs = sum(size(signalL(1:10)) == size(signalS(1:10)));
-    if trs == 0
-        signalS = signalS';
-    end
+    if mode==0
+        trs = sum(size(signalL(1:10)) == size(signalS(1:10)));
+        if trs == 0
+            signalS = signalS';
+        end
 
-    lenL = length(signalL);
-    lenS = length(signalS);
+        lenL = length(signalL);
+        lenS = length(signalS);
 
- % per ogni punto id (da 1  ad lenL-lenS) di signalL calcola la differenza
- % tra i due segnali.
-    error = ones(size(signalL))*inf;
-    for idStart=1:(lenL-lenS)
-        error(idStart) = sum(abs(signalL(idStart:lenS+idStart-1) - signalS));
-    end
-    [~, idMin] = min(error);    
-    timeSnc = time(timetTH1);
+     % per ogni punto id (da 1  ad lenL-lenS) di signalL calcola la differenza
+     % tra i due segnali.
+        error = ones(size(signalL))*inf;
+        for idStart=1:(lenL-lenS)
+            error(idStart) = sum(abs(signalL(idStart:lenS+idStart-1) - signalS));
+        end
+        [~, idMin] = min(error);    
+        timeSnc = timeL(idMin);
+    elseif mode==1
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
 % plot dell'errore 
 %     fprintf('id min trovato da funzione completa: %d con errore %.2f', idMin, error(idMin));
 %     figure();

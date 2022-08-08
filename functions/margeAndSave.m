@@ -1,4 +1,10 @@
-function tTH = margeAndSave(risp, idMin, prefix2, tTH1, tTH2)
+function tTH = margeAndSave(risp, timeSnc, prefix2, tTH1, tTH2)
+    % controllo la base tempi di tTH1 che contenga tutto tTH2
+    [tTH1, timeSnc] = evalNewTimeSpace_tTH1(timeSnc, tTH1, tTH2);
+%     figure()
+%     hold on;
+%     plot(tTH1.time.v, tTH1.EngineSpeed.v, 'k', 'LineWidth', 2);
+%     plot(tTH2.time.v+timeSnc, tTH2.EngineSpeed.v, '-g', 'LineWidth', 2);
             switch risp
                 case 1
                     names1 = fieldnames(tTH1);
@@ -41,4 +47,5 @@ function tTH = margeAndSave(risp, idMin, prefix2, tTH1, tTH2)
                         end
                     end
             end
+% tTH = 3;
 end
