@@ -3,7 +3,15 @@ function tTH1 = margeAndSave(risp, timeSnc, prefix2, tTH1, tTH2)
     [tTH1, timeSnc] = evalNewTimeSpace_tTH1(timeSnc, tTH1, tTH2);
     [~, idMin] = min(abs(tTH1.time.v - timeSnc));
             switch risp
-                case 1 % Save duplicates with prefix se esistono duplicati con prefisso allora li unisce
+                case 1 % Samart marge f.== field name
+%                     if f. tTH2 is in  fs. tTH1 
+%                         if prefix+f. tTH2 in fs.
+%                               tTH1 marge prefix+f. tTH2 to prefix+f. tTH1
+%                          else
+%                               create prefix+f. in tTH1
+%                     else
+%                          create f. in tTH1
+
                     names1 = fieldnames(tTH1);
                     names1Wprf2 = {};
                     for k=1:length(names1)
@@ -41,20 +49,51 @@ function tTH1 = margeAndSave(risp, timeSnc, prefix2, tTH1, tTH2)
                         end
                     end
                     
-                case 2 % Overwrite duplicates tTH2 on tTH1
+                case 2 % add prefix. if exist marge
                     names1 = fieldnames(tTH1);
                     names2 = fieldnames(tTH2);
                     for i = 1:length(names2)
                         name2 = names2{i};
-                        if any(strcmp(names1, name2))
+                        preName2 = strcat(prefix2, name2);
+                        if any(strcmp(names1, preName2))
                             if ~strcmp(name2, 'time')
-                                tTH1.(name2).v(idMin:idMin+length(tTH2.(name2).v)-1) = tTH2.(name2).v;
+                                tTH1.(preName2).v(idMin:idMin+length(tTH2.(name2).v)-1) = tTH2.(name2).v;
+                                tTH1.(preName2).d = strcat(prefix2,':\\ ',tTH1.(preName2).d);
                             end
                         else
-                            v = zeros(size(tTH1.(names1{1}).v));
-                            v(idMin:idMin+length(tTH2.(name2).v)-1) = tTH2.(name2).v;
+                            tTH1.(preName2) = tTH2.(name2);
+                            tTH1.(preName2).v = tTH1.time.v *0;
+                            tTH1.(preName2).d = strcat(prefix2,':\\ ',tTH1.(name2).d);
+                            tTH1.(preName2).v(idMin:idMin+length(tTH2.(name2).v)-1) = tTH2.(name2).v;
+                        end
+                    end
+                    
+                  case 3 %No prefix if exist ignore
+                    names1 = fieldnames(tTH1);
+                    names2 = fieldnames(tTH2);
+                    for i = 1:length(names2)
+                        name2 = names2{i};
+                        if ~any(strcmp(names1, name2))
                             tTH1.(name2) = tTH2.(name2);
-                            tTH1.(name2).v = v;
+                            tTH1.(name2).v = tTH1.time.v *0;
+                            tTH1.(name2).d = strcat(prefix2,':\\ ',tTH1.(name2).d);
+                            tTH1.(name2).v(idMin:idMin+length(tTH2.(name2).v)-1) = tTH2.(name2).v;
+                        end
+                    end
+                    
+                    case 4 %No prefix if exist overwrite
+                    names1 = fieldnames(tTH1);
+                    names2 = fieldnames(tTH2);
+                    for i = 1:length(names2)
+                        name2 = names2{i};
+                        if ~any(strcmp(names1, name2))
+                            tTH1.(name2) = tTH2.(name2);
+                            tTH1.(name2).v = tTH1.time.v *0;
+                            tTH1.(name2).d = strcat(prefix2,':\\ ',tTH1.(name2).d);
+                            tTH1.(name2).v(idMin:idMin+length(tTH2.(name2).v)-1) = tTH2.(name2).v;
+                        else
+                            tTH1.(name2).d = strcat(prefix2,':\\ ',tTH1.(name2).d);
+                            tTH1.(name2).v(idMin:idMin+length(tTH2.(name2).v)-1) = tTH2.(name2).v;
                         end
                     end
             end
