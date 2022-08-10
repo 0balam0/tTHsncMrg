@@ -14,7 +14,7 @@ function tTH1 = margeAndSave(risp, timeSnc, prefix2, tTH1, tTH2)
 
                     names1 = fieldnames(tTH1);
                     names1Wprf2 = {};
-                    for k=1:length(names1)
+                    for k=1:length(names1) %identifico le tracce in tTH1 che sono state aggiunte da tTH2
                         d = tTH1.(names1{k}).d;
                         s = strsplit(d, strcat(prefix2,':\\ '));
                         if length(s)>1
@@ -28,16 +28,16 @@ function tTH1 = margeAndSave(risp, timeSnc, prefix2, tTH1, tTH2)
                         if ~strcmp('time', name2)
                             save_name = name2;
                             preName2 = strcat(prefix2, name2);
-                            if any(strcmp(names1, name2)) 
-                                if any(strcmp(names1, preName2))
+                            if any(strcmp(names1, name2))  %se di tTH2 è già in tTH1
+                                if any(strcmp(names1, preName2)) % se il nome con prefisso è gia esistente es.CAN_EngineSpeed
                                     save_name = preName2;
-                                elseif  any(strcmp(names1Wprf2, name2))
+                                elseif  any(strcmp(names1Wprf2, name2)) % se è stato gia creato un nome senza prefisso appartenente a tTH2 es. Vel_C
                                     save_name=name2;
-                                else
-                                    tTH1.(save_name) = tTH2.(name2);
-                                    tTH1.(save_name).v = tTH1.time.v *0;
-                                    tTH1.(save_name).d = strcat(prefix2,':\\ ',tTH1.(save_name).d);
-                                    save_name = name2;
+                                else % se non esiste il nome con il prefisso ad es. crea CAN_EngineSpeed
+                                    tTH1.(preName2) = tTH2.(name2);
+                                    tTH1.(preName2).v = tTH1.time.v *0;
+                                    tTH1.(preName2).d = strcat(prefix2,':\\ ',tTH1.(preName2).d);
+                                    save_name = preName2;
                                 end
                             else                            
                                 tTH1.(save_name) = tTH2.(name2);
@@ -88,19 +88,16 @@ function tTH1 = margeAndSave(risp, timeSnc, prefix2, tTH1, tTH2)
                     names2 = fieldnames(tTH2);
                     for i = 1:length(names2)
                         name2 = names2{i};
-                        if ~any(strcmp(names1, name2))
-                            disp(4)
-                            tTH1.(name2) = tTH2.(name2);
-                            tTH1.(name2).v = tTH1.time.v *0;
-                            tTH1.(name2).d = strcat(prefix2,':\\ ',tTH1.(name2).d);
-                            tTH1.(name2).v(idMin:idMin+length(tTH2.(name2).v)-1) = tTH2.(name2).v;
-                             disp(4)
-                            
-                        else
-                            disp(3)
-                            tTH1.(name2).d = strcat(prefix2,':\\ ',tTH1.(name2).d);
-                            tTH1.(name2).v(idMin:idMin+length(tTH2.(name2).v)-1) = tTH2.(name2).v;
-                            disp(3)
+                        if ~(strcmp(name2, 'time'))
+                            if ~any(strcmp(names1, name2))
+                                tTH1.(name2) = tTH2.(name2);
+                                tTH1.(name2).v = tTH1.time.v *0;
+                                tTH1.(name2).d = strcat(prefix2,':\\ ',tTH1.(name2).d);
+                                tTH1.(name2).v(idMin:idMin+length(tTH2.(name2).v)-1) = tTH2.(name2).v;
+                            else
+                                tTH1.(name2).d = strcat(prefix2,':\\ ',tTH1.(name2).d);
+                                tTH1.(name2).v(idMin:idMin+length(tTH2.(name2).v)-1) = tTH2.(name2).v;
+                            end
                         end
                     end
             end
