@@ -63,10 +63,12 @@ function tTH1 = margeAndSave(risp, timeSnc, prefix2, tTH1, tTH2)
                                 tTH1.(preName2).d = strcat(prefix2,':\\ ',tTH1.(preName2).d);
                             end
                         else
+                            
                             tTH1.(preName2) = tTH2.(name2);
                             tTH1.(preName2).v = tTH1.time.v *0;
-                            tTH1.(preName2).d = strcat(prefix2,':\\ ',tTH2.(name2).d);
-                            tTH1.(preName2).v(idMin:idMin+length(tTH2.time.v)-1) = tTH2.(name2).v;
+                            
+                            tTH1.(preName2).d = strcat(prefix2,':\\ ',tTH1.(name2).d);
+                            tTH1.(preName2).v(idMin:idMin+length(tTH2.(name2).v)-1) = tTH2.(name2).v;
                         end
                     end
                     
