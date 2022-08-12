@@ -2,6 +2,24 @@ function tTH1 = margeAndSave(risp, timeSnc, prefix2, tTH1, tTH2)
 % controllo la base tempi di tTH1 che contenga tutto tTH2
     [tTH1, timeSnc] = evalNewTimeSpace_tTH1(timeSnc, tTH1, tTH2);
     [~, idMin] = min(abs(tTH1.time.v - timeSnc));
+    names = fieldnames(tTH1);
+    for i=1:length(names)
+        if ~isfield(tTH1.(names{i}),'d')
+            tTH1.(names{i}).d = '-';
+        end
+        if ~isfield(tTH1.(names{i}),'u')
+            tTH1.(names{i}).u = '-';
+        end
+    end
+    names = fieldnames(tTH2);
+     for i=1:length(names)
+        if ~isfield(tTH2.(names{i}),'d')
+            tTH2.(names{i}).d = '-';
+        end
+        if ~isfield(tTH2.(names{i}),'u')
+            tTH2.(names{i}).u = '-';
+        end
+    end
             switch risp
                 case 1 % Samart marge f.== field name
 %                     if f. tTH2 is in  fs. tTH1 
